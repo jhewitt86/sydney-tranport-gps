@@ -65,10 +65,17 @@ module.exports = {
         var transit = protobuf.loadProtoFile(path.join(__dirname, "../proto/gtfs-realtime.proto")).build("transit_realtime");
         var feed = transit.FeedMessage.decode(body);
         var results = [];
+        var ferries = [];
 
         for(let vehicle in feed.entity){
-          let item = {...feed.entity[vehicle], type: 'ferry' }
-          results.push(item);
+          // Check ferry not already handled
+          let id = feed.entities[vehicle].vehicle.vehicle.id;
+          if(ferries.indexOf(id)!==-1){}else{
+            // Push ferry into results
+            ferries.push(id);
+            let item = {...feed.entity[vehicle], type: 'ferry' }
+            results.push(item);
+          }
         }
 
         callback(results);
