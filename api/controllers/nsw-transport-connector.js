@@ -69,7 +69,7 @@ module.exports = {
 
         for(let vehicle in feed.entity){
           // Check ferry not already handled
-          let id = feed.entities[vehicle].vehicle.vehicle.id;
+          let id = feed.entity[vehicle].vehicle.vehicle.id;
           if(ferries.indexOf(id)!==-1){}else{
             // Push ferry into results
             ferries.push(id);
